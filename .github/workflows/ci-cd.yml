@@ -16,11 +16,9 @@ jobs:
       uses: actions/checkout@v3
 
     - name: Build the Docker image
-      working-directory: FirstPython
       run: docker build . --file Dockerfile --tag extpiotrowski/sample_flask_app
 
     - name: Push Docker image to Docker Hub
-      working-directory: FirstPython
       run: |
         docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
         docker push extpiotrowski/sample_flask_app
