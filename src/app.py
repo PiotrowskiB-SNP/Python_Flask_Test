@@ -23,7 +23,7 @@ def show_users():
 
 @app.route('/user(<username>)')
 def show_user(username: str):
-    return f'Main Site for the fine user<h1>{flask.escape(username)}</h1>'
+    return f'Main Site for the fine user<h2>{flask.escape(username)}</h2>'
 
 
 if __name__ == '__main__':
