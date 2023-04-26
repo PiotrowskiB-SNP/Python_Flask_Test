@@ -22,16 +22,16 @@ jobs:
     - name: Push Docker image to Docker Hub
       run: docker push extpiotrowski/sample_flask_app
     
-    #- name: Authentication
-      #uses: 'google-github-actions/auth@v1'
-      #with:
-        #credentials_json: '{"type": "service_account","project_id": "oceanic-airway-384209","private_key_id": "9b8a45d818a6337caac334934ccef94cd956d93e","private_key": "-----BEGIN PRIVATE KEY-----\nMIIEugIBADANBgkqhkiG9w0BAQEFAASCBKQwggSgAgEAAoIBAQDXP1OiEiVsjufp\nWCwh+NtNFvy8WW95fET0JZDmx7gGZARaTslKf8gDdaWMxe3H/KsLKrpmXDrbU87r\nuqFGAi7kL8Nq0ApFhNbR7BSTcMPfZOWnBCd734v4MUmhF+rdKvaL+0FvdZ9AaV3V\nZrViRA4VZ0zvVf9VcV8KXiFxh/XaZghEZRMChyGHPrmYm8ECdlsuCSpCHOIPxj22\nW5jXoJPfN6lVqazgNKSNOJC25PDuOvERuwSZAvkbI6HL/cmHEdfAGMOHlhFIrCj1\ngj7hgb587jZ76t3lUk5h5sQ0EJf9gWtHvS9wBc0TMl9z22O9giJtgJXxx0oPFR00\n+VPRJoT3AgMBAAECgf9vi7cg8PEepkWIp343chTeiQsbOz3fDIdZ/shuJbyNk0dY\n2tDLIBfcXcYX2Hq2fjolj1RfDMIePKWpg7i6jxG92a1rrQ7699xbl/xnFrPAZolH\nWYpx/LyMjP5F0snj07VGKu8TfouzgDx1sBmk0vUkImRm+NSuyBHN+E9chm43abWG\n+rdPHnvdtFIDcmSEjsRUEpLNSOhbw7BJfK0EJPg2LgxemDiT6iaFbLYZ1qeOoIyg\nGePfa94uaO0Uyu0+IDUCqmjUAcAYmMw2dZe1Thht1eKI6TTWRNiZn5pR9kqLfBjd\nE4sS4kEnorsCbr3m0j4voIdJmp3wIgsEbfDGdPECgYEA70rBIRsvC+ZJabW9dde7\n9713tu9zI92fZYzm2Tp9RRI19mNUYgIM7di+gNeLMJ36O0cl7/n/cXjnhsS/kV4a\nQjlujhMHW+1+OUAXaYy6Cf/mAajCc8EzpDCRCVQ5uLDoZVRR5kwjZOAeJicDhwuM\nWKCKEyEmlfzM35OET/OQOdMCgYEA5kbIyC5qfoBvKdZ0BcSNdQa/TubgVWWZPvop\nkFTNJPKrAaUxa1bRZ2RAXflOAIPPTHW1iHNRN1rx7bLhlLcEOUiEvDiUBjPqmodA\nwbYaamNvzTIaw2Qq2q/JHgnYQ/L61veWPUXLQtGFprA6HF8vZhaKW75ctPSImVIS\nrzWVjc0CgYBJCxOa7HZW9ouwRfa4Uwsgm2hAoiUObKcsU29gHdeBTwbD2Bw48pFJ\nxSCZqbHmPELW92fgMfrEg3iBDevADu6LCobxvWNAr2UZSrQa1wcu6DsohIAe33nJ\nA74yD9CyzOWTkMKTPuiK8VKiqMQN4/uKTi73meXyYMGU+a2ozhtXWwKBgH3FvZZw\nm6PaXFz6j8Yys5xuggEDYxXhdxEJq7f0SVPb4wD0DAj3k0ooXGu3Zh4r4AZ/6BXN\n/lcAqlDMuh7y0zDCZhUzxc2Zf5LFOt5SqxzekMr/idScmjd1eaCZefCq/sx40CtJ\nOpqVO61uZV7nskjNGObBE3uWcCFlzWS7HKMlAoGAF7hifKX53s5aOvJJe0Z/qjY7\nSLvvt38lzSJp6lP66/0ibwpP0JtFYWJ3qZNF+bR9lQkzEuBQNObFxQuer09dodXd\nKJ6CoWsv1BxId+gzuwDD/tFbpwX/eDO0VkLZXDa2/YFR1YkX3D0t1Ewk9FSypkKg\nzU2O7t/n35aRgomwafU=\n-----END PRIVATE KEY-----\n","client_email": "githubv3@oceanic-airway-384209.iam.gserviceaccount.com","client_id": "110841981776564435095","auth_uri": "https://accounts.google.com/o/oauth2/auth","token_uri": "https://oauth2.googleapis.com/token","auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs","client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/githubv3%40oceanic-airway-384209.iam.gserviceaccount.com"}'
+    - name: Authentication
+      uses: 'google-github-actions/auth@v1'
+      with:
+        credentials_json: ${{ secrets.CLOUD_JSONKEY}}
     
-    #- name: Deploy to Cloud Run
-     # id: deploy
-      #uses: google-github-actions/deploy-cloudrun@v0
-      #wth:
-#       service: hello-app-service
-#       region: europe-central2
-  #     project_id: oceanic-airway-384209
- #      image: extpiotrowski/sample_flask_app
+    - name: Deploy to Cloud Run
+      id: deploy
+      uses: google-github-actions/deploy-cloudrun@v0
+      with:
+        service: flask-app
+        region: europe-central2
+        project_id: my-project-flask-384909
+        image: extpiotrowski/sample_flask_app
